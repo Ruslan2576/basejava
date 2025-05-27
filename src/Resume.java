@@ -1,8 +1,7 @@
 /**
- * Initial resume class
+ * Initial resume class.
  */
 public class Resume {
-
     // Unique identifier
     String uuid;
 
