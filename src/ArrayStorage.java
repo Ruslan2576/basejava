@@ -8,7 +8,7 @@ public class ArrayStorage {
     private int storageSize;
 
     void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, storageSize, null);
         storageSize = 0;
     }
 
@@ -32,6 +32,7 @@ public class ArrayStorage {
             if (uuid.equals(storage[i].uuid)) {
                 System.arraycopy(storage, i + 1, storage, i, storageSize - i - 1);
                 storage[--storageSize] = null;
+                break;
             }
         }
     }
