@@ -25,16 +25,16 @@ public class ArrayStorage {
         System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
     }
 
-    public void save(Resume r) {
+    public void save(Resume resume) {
         for (int i = 0; i < storageSize; i++) {
-            if (r.getUuid().equals(storage[i].getUuid())) {
-                System.out.printf("Ошибка: %s уже есть в хранилище%n", r.getUuid());
+            if (resume.getUuid().equals(storage[i].getUuid())) {
+                System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
                 return;
             }
         }
 
         if (storageSize < storage.length) {
-            storage[storageSize++] = r;
+            storage[storageSize++] = resume;
         } else {
             System.out.println("Ошибка: хранилище переполнено");
         }
