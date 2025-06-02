@@ -7,7 +7,8 @@ import java.util.Arrays;
  * Array based storage for Resumes.
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    public static final int STORAGE_LIMIT = 10000;
+    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int storageSize;
 
     public void clear() {
@@ -16,21 +17,17 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        for (int i = 0; i < storageSize; i++) {
-            if (resume.getUuid().equals(storage[i].getUuid())) {
-                resume.setUuid("abrakadabra");
-                return;
-            }
+        if (getSearchKey(resume.getUuid()) >= 0) {
+            resume.setUuid("abrakadabra");
+            return;
         }
         System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
     }
 
     public void save(Resume resume) {
-        for (int i = 0; i < storageSize; i++) {
-            if (resume.getUuid().equals(storage[i].getUuid())) {
-                System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
-                return;
-            }
+        if (getSearchKey(resume.getUuid()) >= 0) {
+            System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
+            return;
         }
 
         if (storageSize < storage.length) {
@@ -41,22 +38,20 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < storageSize; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return storage[i];
-            }
+        int resumeIndex = getSearchKey(uuid);
+        if (getSearchKey(uuid) >= 0) {
+            return storage[resumeIndex];
         }
         System.out.printf("Ошибка: нет такого %s резюме%n", uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < storageSize; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                System.arraycopy(storage, i + 1, storage, i, storageSize - i - 1);
-                storage[--storageSize] = null;
-                return;
-            }
+        int resumeIndex = getSearchKey(uuid);
+        if (resumeIndex >= 0) {
+            System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, storageSize - resumeIndex - 1);
+            storage[--storageSize] = null;
+            return;
         }
         System.out.printf("Ошибка: не могу удалить %s его нет в хранилище%n", uuid);
     }
@@ -71,5 +66,14 @@ public class ArrayStorage {
 
     public int size() {
         return storageSize;
+    }
+
+    private int getSearchKey(String uuid) {
+        for (int i = 0; i < storageSize; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
