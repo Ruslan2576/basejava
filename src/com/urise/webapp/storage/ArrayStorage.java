@@ -53,7 +53,7 @@ public class ArrayStorage {
         int resumeIndex = getSearchKey(uuid);
         if (resumeIndex >= 0) {
             storage[resumeIndex] = storage[storageSize - 1];
-            storage[storageSize] = null;
+            storage[storageSize - 1] = null;
             --storageSize;
             return;
         }
