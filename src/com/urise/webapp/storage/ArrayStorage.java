@@ -20,7 +20,6 @@ public class ArrayStorage {
         int resumeIndex = getSearchKey(resume.getUuid());
         if (resumeIndex >= 0) {
             storage[resumeIndex] = new Resume();
-            storage[resumeIndex].setUuid("uuid4");
             return;
         }
         System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
