@@ -17,8 +17,10 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (getSearchKey(resume.getUuid()) >= 0) {
-            resume.setUuid("abrakadabra");
+        int resumeIndex = getSearchKey(resume.getUuid());
+        if (resumeIndex >= 0) {
+            storage[resumeIndex] = new Resume();
+            storage[resumeIndex].setUuid("uuid4");
             return;
         }
         System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
@@ -31,7 +33,8 @@ public class ArrayStorage {
         }
 
         if (storageSize < storage.length) {
-            storage[storageSize++] = resume;
+            storage[storageSize] = resume;
+            ++storageSize;
         } else {
             System.out.println("Ошибка: хранилище переполнено");
         }
@@ -49,8 +52,9 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int resumeIndex = getSearchKey(uuid);
         if (resumeIndex >= 0) {
-            System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, storageSize - resumeIndex - 1);
-            storage[--storageSize] = null;
+            storage[resumeIndex] = storage[storageSize - 1];
+            storage[storageSize] = null;
+            --storageSize;
             return;
         }
         System.out.printf("Ошибка: не могу удалить %s его нет в хранилище%n", uuid);
