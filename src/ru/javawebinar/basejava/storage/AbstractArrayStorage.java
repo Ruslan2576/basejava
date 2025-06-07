@@ -8,13 +8,13 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int storageSize;
 
-    public void clear() {
+    public final void clear() {
         Arrays.fill(storage, 0, storageSize, null);
         storageSize = 0;
     }
 
-    public void update(Resume resume) {
-        int resumeIndex = templateMethod(resume.getUuid());
+    public final void update(Resume resume) {
+        int resumeIndex = getSearchKey(resume.getUuid());
         if (resumeIndex >= 0) {
             Resume newResume = new Resume();
             newResume.setUuid("abracadabra");
@@ -24,8 +24,28 @@ public abstract class AbstractArrayStorage implements Storage {
         System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
     }
 
-    public Resume get(String uuid) {
-        int resumeIndex = templateMethod(uuid);
+    public final void save(Resume resume) {
+        int resumeIndex = getSearchKey(resume.getUuid());
+        if (this.getClass().getSimpleName().equals("SortedArrayStorage")) {
+            // перехватчик
+            mySort(resume, resumeIndex);
+            return;
+        }
+        if (resumeIndex >= 0) {
+            System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
+            return;
+        }
+
+        if (storageSize < storage.length) {
+            storage[storageSize] = resume;
+            ++storageSize;
+        } else {
+            System.out.println("Ошибка: хранилище переполнено");
+        }
+    }
+
+    public final Resume get(String uuid) {
+        int resumeIndex = getSearchKey(uuid);
         if (resumeIndex >= 0) {
             return storage[resumeIndex];
         }
@@ -33,8 +53,8 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
-    public void delete(String uuid) {
-        int resumeIndex = templateMethod(uuid);
+    public final void delete(String uuid) {
+        int resumeIndex = getSearchKey(uuid);
         if (resumeIndex >= 0) {
             System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, storageSize - resumeIndex - 1);
             storage[storageSize - 1] = null;
@@ -48,13 +68,13 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, storageSize);
     }
 
-    public int size() {
+    public final int size() {
         return storageSize;
     }
 
-    final int templateMethod(String uuid) {
-        return getSearchKey(uuid);
-    }
-
     protected abstract int getSearchKey(String uuid);
+
+    // перехватчик
+    void mySort(Resume resume, int resumeIndex) {
+    }
 }
