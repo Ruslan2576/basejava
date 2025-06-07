@@ -16,9 +16,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void update(Resume resume) {
         int resumeIndex = getSearchKey(resume.getUuid());
         if (resumeIndex >= 0) {
-            Resume newResume = new Resume();
-            newResume.setUuid("abracadabra");
-            storage[resumeIndex] = newResume;
+            storage[resumeIndex] = resume;
             return;
         }
         System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
