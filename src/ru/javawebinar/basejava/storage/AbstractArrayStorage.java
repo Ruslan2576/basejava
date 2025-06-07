@@ -8,7 +8,7 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int storageSize;
 
-    public final void clear() {
+    public void clear() {
         Arrays.fill(storage, 0, storageSize, null);
         storageSize = 0;
     }
@@ -53,24 +53,26 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final void delete(String uuid) {
         int resumeIndex = getSearchKey(uuid);
-        if (resumeIndex >= 0) {
-            System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, storageSize - resumeIndex - 1);
+        if (resumeIndex < 0) {
+            System.out.printf("Ошибка: не могу удалить %s его нет в хранилище%n", uuid);
+        } else {
+            specialDelete(resumeIndex);
             storage[storageSize - 1] = null;
             --storageSize;
-            return;
         }
-        System.out.printf("Ошибка: не могу удалить %s его нет в хранилище%n", uuid);
     }
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, storageSize);
     }
 
-    public final int size() {
+    public int size() {
         return storageSize;
     }
 
     protected abstract int getSearchKey(String uuid);
+
+    protected abstract void specialDelete(int resumeIndex);
 
     // перехватчик
     protected void mySort(Resume resume, int resumeIndex) {

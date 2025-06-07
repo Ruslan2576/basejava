@@ -5,6 +5,12 @@ package ru.javawebinar.basejava.storage;
  */
 
 public class ArrayStorage extends AbstractArrayStorage {
+    @Override
+    protected void specialDelete(int resumeIndex) {
+        storage[resumeIndex] = storage[storageSize - 1];
+    }
+
+    @Override
     protected int getSearchKey(String uuid) {
         for (int i = 0; i < storageSize; i++) {
             if (uuid.equals(storage[i].getUuid())) {
