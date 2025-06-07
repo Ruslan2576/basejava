@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    void mySort(Resume resume, int index) {
+    protected void mySort(Resume resume, int index) {
         int insertionPointer = -index - 1;
         System.arraycopy(storage, insertionPointer, storage, insertionPointer + 1, storageSize - insertionPointer);
         storage[insertionPointer] = resume;

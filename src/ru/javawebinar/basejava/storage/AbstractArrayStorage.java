@@ -73,6 +73,6 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract int getSearchKey(String uuid);
 
     // перехватчик
-    void mySort(Resume resume, int resumeIndex) {
+    protected void mySort(Resume resume, int resumeIndex) {
     }
 }
