@@ -23,17 +23,17 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public final void save(Resume resume) {
-        int resumeIndex = getSearchKey(resume.getUuid());
-        if (resumeIndex >= 0) {
-            System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
+        if (storageSize >= storage.length) {
+            System.out.println("Ошибка: хранилище переполнено");
             return;
         }
 
-        if (storageSize < storage.length) {
+        int resumeIndex = getSearchKey(resume.getUuid());
+        if (resumeIndex >= 0) {
+            System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
+        } else {
             specialInsert(resume, resumeIndex);
             ++storageSize;
-        } else {
-            System.out.println("Ошибка: хранилище переполнено");
         }
     }
 
