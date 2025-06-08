@@ -5,16 +5,15 @@ import ru.javawebinar.basejava.model.Resume;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    protected void specialDelete(int resumeIndex) {
-        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, storageSize - resumeIndex - 1);
-    }
-
-    @Override
-    protected void mySort(Resume resume, int index) {
+    protected void specialInsert(Resume resume, int index) {
         int insertPoint = -index - 1;
         System.arraycopy(storage, insertPoint, storage, insertPoint + 1, storageSize - insertPoint);
         storage[insertPoint] = resume;
-        ++storageSize;
+    }
+
+    @Override
+    protected void specialDelete(int resumeIndex) {
+        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, storageSize - resumeIndex - 1);
     }
 
     @Override

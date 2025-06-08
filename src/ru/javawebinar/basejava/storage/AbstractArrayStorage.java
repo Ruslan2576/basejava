@@ -24,18 +24,13 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final void save(Resume resume) {
         int resumeIndex = getSearchKey(resume.getUuid());
-        if (this.getClass().getSimpleName().equals("SortedArrayStorage")) {
-            // перехватчик
-            mySort(resume, resumeIndex);
-            return;
-        }
         if (resumeIndex >= 0) {
             System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
             return;
         }
 
         if (storageSize < storage.length) {
-            storage[storageSize] = resume;
+            specialInsert(resume, resumeIndex);
             ++storageSize;
         } else {
             System.out.println("Ошибка: хранилище переполнено");
@@ -70,11 +65,9 @@ public abstract class AbstractArrayStorage implements Storage {
         return storageSize;
     }
 
-    protected abstract int getSearchKey(String uuid);
+    protected abstract void specialInsert(Resume resume, int index);
 
     protected abstract void specialDelete(int resumeIndex);
 
-    // перехватчик
-    protected void mySort(Resume resume, int resumeIndex) {
-    }
+    protected abstract int getSearchKey(String uuid);
 }

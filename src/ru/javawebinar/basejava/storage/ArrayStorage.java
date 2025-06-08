@@ -1,10 +1,17 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.model.Resume;
+
 /**
  * Array based storage for Resumes.
  */
 
 public class ArrayStorage extends AbstractArrayStorage {
+    @Override
+    protected void specialInsert(Resume resume, int index) {
+        storage[storageSize] = resume;
+    }
+
     @Override
     protected void specialDelete(int resumeIndex) {
         storage[resumeIndex] = storage[storageSize - 1];
