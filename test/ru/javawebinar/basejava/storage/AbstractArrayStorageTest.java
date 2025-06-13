@@ -32,6 +32,12 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(0, storage.size());
     }
 
+    @Test
+    void update() {
+        storage.update(storage.getAll()[0]);
+        assertEquals(storage.getAll()[0], storage.getAll()[0]);
+        assertEquals(storage.getAll()[0].getUuid(), storage.getAll()[0].getUuid());
+    }
 
     @Test
     void updateNotExist() {
