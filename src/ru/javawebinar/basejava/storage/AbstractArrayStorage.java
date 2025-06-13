@@ -1,6 +1,10 @@
 package ru.javawebinar.basejava.storage;
 
 import java.util.Arrays;
+
+import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractArrayStorage implements Storage {
@@ -15,22 +19,21 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final void update(Resume resume) {
         int resumeIndex = getSearchKey(resume.getUuid());
-        if (resumeIndex >= 0) {
-            storage[resumeIndex] = resume;
-            return;
+        if (resumeIndex < 0) {
+            throw new NotExistStorageException(resume.getUuid());
         }
-        System.out.printf("Ошибка: не могу обновить %s его нет в хранилище%n", resume.getUuid());
+
+        storage[resumeIndex] = resume;
     }
 
     public final void save(Resume resume) {
         if (storageSize >= storage.length) {
-            System.out.println("Ошибка: хранилище переполнено");
-            return;
+            throw new StorageException("Storage overflow", resume.getUuid());
         }
 
         int resumeIndex = getSearchKey(resume.getUuid());
         if (resumeIndex >= 0) {
-            System.out.printf("Ошибка: %s уже есть в хранилище%n", resume.getUuid());
+            throw new ExistStorageException(resume.getUuid());
         } else {
             specialInsert(resume, resumeIndex);
             ++storageSize;
@@ -42,14 +45,13 @@ public abstract class AbstractArrayStorage implements Storage {
         if (resumeIndex >= 0) {
             return storage[resumeIndex];
         }
-        System.out.printf("Ошибка: нет такого %s резюме%n", uuid);
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     public final void delete(String uuid) {
         int resumeIndex = getSearchKey(uuid);
         if (resumeIndex < 0) {
-            System.out.printf("Ошибка: не могу удалить %s его нет в хранилище%n", uuid);
+            throw new NotExistStorageException(uuid);
         } else {
             specialDelete(resumeIndex);
             storage[storageSize - 1] = null;
