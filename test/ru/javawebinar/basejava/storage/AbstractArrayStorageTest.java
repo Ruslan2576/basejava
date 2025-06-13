@@ -34,10 +34,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     void update() {
-        Resume resumeTest = storage.getAll()[0];
+        Resume resumeTest = new Resume(UUID_1);
         storage.update(resumeTest);
-        assertEquals(resumeTest, storage.getAll()[0]);
-        assertEquals(resumeTest.getUuid(), storage.getAll()[0].getUuid());
+        assertSame(resumeTest, storage.get(UUID_1));
     }
 
     @Test
