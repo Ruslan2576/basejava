@@ -2,9 +2,6 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 /**
  * Array based storage for Resumes.
  */
