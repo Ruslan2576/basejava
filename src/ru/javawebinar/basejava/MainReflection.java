@@ -12,8 +12,9 @@ public class MainReflection {
         field.setAccessible(true);
         System.out.println(field.getName());
         System.out.println(field.get(resume));
+        //
         field.set(resume, "new uuid");
-        Method method1 = resume.getClass().getDeclaredMethod("toString");
+        Method method1 = resume.getClass().getMethod("toString");
         System.out.println(method1.invoke(resume));
     }
 }
