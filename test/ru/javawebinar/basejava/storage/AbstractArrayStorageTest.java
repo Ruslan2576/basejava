@@ -13,6 +13,9 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String SPECIAL_UUID = "specialUuid777";
+    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3);
     private static final Resume SPECAL_RESUME = new Resume(SPECIAL_UUID);
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -21,9 +24,9 @@ public abstract class AbstractArrayStorageTest {
     @BeforeEach
     public void setUp() {
         storage.clear();
-        storage.save(new Resume(UUID_1));
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
     }
 
     @Test
@@ -42,7 +45,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     void updateNotExist() {
-        assertThrows(NotExistStorageException.class, () -> storage.update(new Resume("uuid100")));
+        assertThrows(NotExistStorageException.class, () -> storage.update(SPECAL_RESUME));
     }
 
     @Test
@@ -72,9 +75,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     void get() {
-        for (Resume resume : storage.getAll()) {
-            assertGet(resume);
-        }
+        assertGet(RESUME_1);
+        assertGet(RESUME_2);
+        assertGet(RESUME_3);
     }
 
     void assertGet(Resume resume) {
