@@ -14,7 +14,6 @@ public class MainCollection {
 
         storage.delete("uuid2");
         storage.update(new Resume("uuid3"));
-
         System.out.println(Arrays.toString(storage.getAll()));
     }
 }

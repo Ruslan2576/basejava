@@ -9,26 +9,31 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int storageSize;
 
     @Override
-    public void specialClear() {
+    public void doClear() {
         Arrays.fill(storage, 0, storageSize, null);
         storageSize = 0;
     }
 
     @Override
-    protected void specialUpdate(Resume resume, int index) {
+    protected void doUpdate(Resume resume, int index) {
         storage[index] = resume;
     }
 
     @Override
-    protected Resume specialGet(int index) {
+    protected Resume doGet(int index) {
         return storage[index];
     }
 
-    public Resume[] specialGetAll() {
+    public Resume[] doGetAll() {
         return Arrays.copyOf(storage, storageSize);
     }
 
-    public int specialSize() {
+    public int doSize() {
         return storageSize;
+    }
+
+    @Override
+    protected int isExist(String uuid) {
+        return getSearchKey(uuid);
     }
 }

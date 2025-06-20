@@ -2,7 +2,6 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.ArrayStorage;
-import ru.javawebinar.basejava.storage.SortedArrayStorage;
 import ru.javawebinar.basejava.storage.Storage;
 
 /**

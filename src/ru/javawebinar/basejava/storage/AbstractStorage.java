@@ -8,77 +8,82 @@ import ru.javawebinar.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
     @Override
     public final void clear() {
-        specialClear();
+        doClear();
     }
 
     @Override
     public final void update(Resume resume) {
-        int index = getSearchKey(resume.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
-        specialUpdate(resume, index);
+        Object searchKey = getNotExistingSearchKey(resume.getUuid());
+        doUpdate(resume, (int) searchKey);
     }
 
     @Override
     public final void delete(String uuid) {
-        int resumeIndex = getSearchKey(uuid);
-        if (resumeIndex < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            specialDelete(resumeIndex);
-        }
+        Object searchKey = getNotExistingSearchKey(uuid);
+        doDelete((int) searchKey);
     }
 
     @Override
     public final void save(Resume resume) {
         if (!getClass().equals(ListStorage.class)) {
-            if (specialSize() >= AbstractArrayStorage.STORAGE_LIMIT) {
+            if (doSize() >= AbstractArrayStorage.STORAGE_LIMIT) {
                 throw new StorageException("Storage overflow", resume.getUuid());
             }
         }
 
-        int resumeIndex = getSearchKey(resume.getUuid());
-        if (resumeIndex >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            specialInsert(resume, resumeIndex);
-        }
+        Object searchKey = getExistingSearchKey(resume.getUuid());
+        doInsert(resume, (int) searchKey);
     }
 
     @Override
     public final Resume get(String uuid) {
-        int index = getSearchKey(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-
-        return specialGet(index);
+        Object searchKey = getNotExistingSearchKey(uuid);
+        return doGet((int) searchKey);
     }
 
     @Override
     public final Resume[] getAll() {
-        return specialGetAll();
+        return doGetAll();
     }
 
     @Override
     public final int size() {
-        return specialSize();
+        return doSize();
     }
 
-    protected abstract void specialClear();
+    private Object getExistingSearchKey(String uuid) {
+        Object searchKey = isExist(uuid);
+        if ((int) searchKey >= 0) {
+            throw new ExistStorageException(uuid);
+        }
 
-    protected abstract void specialInsert(Resume resume, int index);
+        return searchKey;
+    }
 
-    protected abstract void specialUpdate(Resume resume, int index);
+    private Object getNotExistingSearchKey(String uuid) {
+        Object searchKey = isExist(uuid);
+        if ((int) searchKey < 0) {
+            throw new NotExistStorageException(uuid);
+        }
 
-    protected abstract Resume specialGet(int index);
+        return searchKey;
+    }
 
-    protected abstract Resume[] specialGetAll();
+    protected abstract void doClear();
 
-    protected abstract int specialSize();
+    protected abstract void doInsert(Resume resume, int index);
 
-    protected abstract void specialDelete(int resumeIndex);
+    protected abstract void doUpdate(Resume resume, int index);
+
+    protected abstract Resume doGet(int index);
+
+    protected abstract Resume[] doGetAll();
+
+    protected abstract int doSize();
+
+    protected abstract void doDelete(int resumeIndex);
 
     protected abstract int getSearchKey(String uuid);
+
+    protected abstract int isExist(String uuid);
 }
