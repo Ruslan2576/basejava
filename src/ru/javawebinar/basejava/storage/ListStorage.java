@@ -13,23 +13,23 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void doUpdate(Resume r, int index) {
-        list.set(index, r);
+    public void doUpdate(Resume r, Object searchKey) {
+        list.set((int) searchKey, r);
     }
 
     @Override
-    public void doInsert(Resume r, int index) {
+    public void doInsert(Resume r, Object searchKey) {
         list.add(r);
     }
 
     @Override
-    public Resume doGet(int index) {
-        return list.get(index);
+    public Resume doGet(Object searchKey) {
+        return list.get((int) searchKey);
     }
 
     @Override
-    protected void doDelete(int index) {
-        list.remove(index);
+    protected void doDelete(Object searchKey) {
+        list.remove((int) searchKey);
     }
 
     @Override
@@ -42,14 +42,13 @@ public class ListStorage extends AbstractStorage {
         return list.size();
     }
 
-    @Override
-    protected int isExist(String uuid) {
-        return getSearchKey(uuid);
+    protected boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
     }
 
-    public int getSearchKey(String uuid) {
+    public Object getSearchKey(Object searchKey) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUuid().equals(uuid)) {
+            if (list.get(i).getUuid().equals(searchKey)) {
                 return i;
             }
         }

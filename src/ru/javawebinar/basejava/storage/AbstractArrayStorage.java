@@ -15,13 +15,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Resume resume, int index) {
-        storage[index] = resume;
+    protected void doUpdate(Resume resume, Object searchKey) {
+        storage[(int) searchKey] = resume;
     }
 
     @Override
-    protected Resume doGet(int index) {
-        return storage[index];
+    protected Resume doGet(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     public Resume[] doGetAll() {
@@ -33,7 +33,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected int isExist(String uuid) {
-        return getSearchKey(uuid);
+    protected boolean isExist(Object searchKey) {
+        return (int) searchKey >= 0;
     }
 }

@@ -1,11 +1,11 @@
 package ru.javawebinar.basejava.storage;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import ru.javawebinar.basejava.model.Resume;
 
 public class MapStorage extends AbstractStorage {
-    Map<Integer, Resume> map = new HashMap<>();
+    protected final Map<String, Resume> map = new LinkedHashMap<>();
 
     @Override
     protected void doClear() {
@@ -13,18 +13,18 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doInsert(Resume resume, int key) {
-        map.put(size() + 1, resume);
+    protected void doInsert(Resume resume, Object searchKey) {
+        map.put((String) searchKey, resume);
     }
 
     @Override
-    protected void doUpdate(Resume resume, int key) {
-        map.put(key, resume);
+    protected void doUpdate(Resume resume, Object searchKey) {
+        map.put((String) searchKey, resume);
     }
 
     @Override
-    protected Resume doGet(int key) {
-        return map.get(key);
+    protected Resume doGet(Object searchKey) {
+        return map.get((String) searchKey);
     }
 
     @Override
@@ -38,23 +38,17 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doDelete(int key) {
-        map.remove(key);
+    protected void doDelete(Object searchKey) {
+        map.remove((String) searchKey);
     }
 
     @Override
-    protected int isExist(String uuid) {
-        return getSearchKey(uuid);
+    protected boolean isExist(Object searchKey) {
+        return map.containsKey((String) searchKey);
     }
 
     @Override
-    protected int getSearchKey(String uuid) {
-        for (Integer key : map.keySet()) {
-            if (map.get(key).getUuid().equals(uuid)) {
-                return key;
-            }
-        }
-
-        return -1;
+    protected Object getSearchKey(Object searchKey) {
+        return searchKey;
     }
 }
