@@ -9,6 +9,7 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void doInsert(Resume resume, Object searchKey) {
+        checkOverflow(resume);
         storage[storageSize] = resume;
         ++storageSize;
     }

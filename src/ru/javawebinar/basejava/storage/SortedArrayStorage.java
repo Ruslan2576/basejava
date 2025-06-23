@@ -6,6 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void doInsert(Resume resume, Object searchKey) {
+        checkOverflow(resume);
         int insertPoint = -(int) searchKey - 1;
         System.arraycopy(storage, insertPoint, storage, insertPoint + 1, storageSize - insertPoint);
         storage[insertPoint] = resume;
