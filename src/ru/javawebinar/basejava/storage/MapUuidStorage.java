@@ -1,11 +1,13 @@
 package ru.javawebinar.basejava.storage;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import ru.javawebinar.basejava.model.Resume;
 
-public class MapStorage extends AbstractStorage {
-    protected final Map<String, Resume> map = new LinkedHashMap<>();
+public class MapUuidStorage extends AbstractStorage {
+    protected final Map<String, Resume> map = new HashMap<>();
 
     @Override
     protected void doClear() {
@@ -28,10 +30,10 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume[] doGetAll() {
-        return map.values().toArray(new Resume[0]);
+    protected List<Resume> doGetAll() {
+        return new ArrayList<>(map.values());
     }
-
+    
     @Override
     protected int doSize() {
         return map.size();

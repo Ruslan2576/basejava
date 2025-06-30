@@ -11,14 +11,14 @@ public class ArrayStorage extends AbstractArrayStorage {
     protected void doInsert(Resume resume, Object searchKey) {
         checkOverflow(resume);
         storage[storageSize] = resume;
-        ++storageSize;
+        storageSize++;
     }
 
     @Override
     protected void doDelete(Object searchKey) {
         storage[(int) searchKey] = storage[storageSize - 1];
         storage[storageSize - 1] = null;
-        --storageSize;
+        storageSize--;
     }
 
     @Override

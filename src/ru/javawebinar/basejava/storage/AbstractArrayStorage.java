@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
 import java.util.Arrays;
+import java.util.List;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -25,8 +26,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[(int) searchKey];
     }
 
-    public Resume[] doGetAll() {
-        return Arrays.copyOf(storage, storageSize);
+    public List<Resume> doGetAll() {
+        return Arrays.asList(Arrays.copyOf(storage, storageSize));
     }
 
     public int doSize() {

@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
+import java.util.Comparator;
+import java.util.List;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
@@ -35,8 +37,10 @@ public abstract class AbstractStorage implements Storage {
     }
 
     @Override
-    public final Resume[] getAll() {
-        return doGetAll();
+    public final List<Resume> getAllSorted() {
+        List<Resume> sortedResumes = doGetAll();
+        sortedResumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        return sortedResumes;
     }
 
     @Override
@@ -70,7 +74,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume doGet(Object searchKey);
 
-    protected abstract Resume[] doGetAll();
+    protected abstract List<Resume> doGetAll();
 
     protected abstract int doSize();
 
