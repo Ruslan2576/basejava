@@ -2,7 +2,6 @@ package ru.javawebinar;
 
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.MapResumeStorage;
-import ru.javawebinar.basejava.storage.MapUuidStorage;
 import ru.javawebinar.basejava.storage.Storage;
 
 public class MainCollection {

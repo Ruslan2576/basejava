@@ -1,8 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.model.Resume;
-
 import java.util.List;
+import ru.javawebinar.basejava.model.Resume;
 
 public interface Storage {
     void clear();
