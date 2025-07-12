@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import ru.javawebinar.basejava.model.Resume;
 
-public class MapResumeStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage<Resume> {
     protected final Map<String, Resume> map = new HashMap<>();
 
     @Override
@@ -15,18 +15,18 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doInsert(Resume resume, Object searchKey) {
-        map.put((String) searchKey, resume);
+    protected void doInsert(Resume resume, Resume searchKey) {
+        map.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doUpdate(Resume resume, Object searchKey) {
-        map.put(((Resume) searchKey).getUuid(), resume);
+    protected void doUpdate(Resume resume, Resume searchKey) {
+        map.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return map.get(((Resume) searchKey).getUuid());
+    protected Resume doGet(Resume searchKey) {
+        return map.get(searchKey.getUuid());
     }
 
     @Override
@@ -40,24 +40,17 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        map.remove(((Resume) searchKey).getUuid());
+    protected void doDelete(Resume searchKey) {
+        map.remove(searchKey.getUuid());
     }
 
     @Override
-    protected Object getSearchKey(Object searchKey) {
-        Resume resume = map.get((String) searchKey);
-        if (resume == null) {
-            return searchKey;
-        }
-        return resume;
+    protected Resume getSearchKey(String uuid) {
+        return map.get(uuid);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        if (searchKey instanceof Resume resume) {
-            return map.containsKey(resume.getUuid());
-        }
-        return false;
+    protected boolean isExist(Resume searchKey) {
+        return searchKey != null;
     }
 }

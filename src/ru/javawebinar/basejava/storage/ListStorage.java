@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import ru.javawebinar.basejava.model.Resume;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
     protected final List<Resume> list = new ArrayList<>();
+
+    public Integer getSearchKey(String searchKey) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(searchKey)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     @Override
     public void doClear() {
@@ -13,28 +22,28 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void doUpdate(Resume r, Object searchKey) {
-        list.set((int) searchKey, r);
+    public void doUpdate(Resume r, Integer searchKey) {
+        list.set(searchKey, r);
     }
 
     @Override
-    public void doInsert(Resume r, Object searchKey) {
+    public void doInsert(Resume r, Integer searchKey) {
         list.add(r);
     }
 
     @Override
-    public Resume doGet(Object searchKey) {
-        return list.get((int) searchKey);
+    public Resume doGet(Integer searchKey) {
+        return list.get(searchKey);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        list.remove((int) searchKey);
+    protected void doDelete(Integer searchKey) {
+        list.remove(searchKey.intValue());
     }
 
     @Override
     public List<Resume> doGetAll() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override
@@ -42,16 +51,7 @@ public class ListStorage extends AbstractStorage {
         return list.size();
     }
 
-    protected boolean isExist(Object searchKey) {
-        return (int) searchKey >= 0;
-    }
-
-    public Object getSearchKey(Object searchKey) {
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUuid().equals(searchKey)) {
-                return i;
-            }
-        }
-        return -1;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey >= 0;
     }
 }

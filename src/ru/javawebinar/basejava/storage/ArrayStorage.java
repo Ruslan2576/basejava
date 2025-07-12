@@ -8,23 +8,23 @@ import ru.javawebinar.basejava.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
     @Override
-    protected void doInsert(Resume resume, Object searchKey) {
+    protected void doInsert(Resume resume, Integer searchKey) {
         checkOverflow(resume);
         storage[storageSize] = resume;
         storageSize++;
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        storage[(int) searchKey] = storage[storageSize - 1];
+    protected void doDelete(Integer searchKey) {
+        storage[searchKey] = storage[storageSize - 1];
         storage[storageSize - 1] = null;
         storageSize--;
     }
 
     @Override
-    protected Object getSearchKey(Object searchKey) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < storageSize; i++) {
-            if (searchKey.equals(storage[i].getUuid())) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }

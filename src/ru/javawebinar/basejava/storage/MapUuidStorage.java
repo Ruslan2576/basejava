@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import ru.javawebinar.basejava.model.Resume;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
     protected final Map<String, Resume> map = new HashMap<>();
 
     @Override
@@ -15,18 +15,18 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doInsert(Resume resume, Object searchKey) {
-        map.put((String) searchKey, resume);
+    protected void doInsert(Resume resume, String searchKey) {
+        map.put(searchKey, resume);
     }
 
     @Override
-    protected void doUpdate(Resume resume, Object searchKey) {
-        map.put((String) searchKey, resume);
+    protected void doUpdate(Resume resume, String searchKey) {
+        map.put(searchKey, resume);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return map.get((String) searchKey);
+    protected Resume doGet(String searchKey) {
+        return map.get(searchKey);
     }
 
     @Override
@@ -40,17 +40,17 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        map.remove((String) searchKey);
+    protected void doDelete(String searchKey) {
+        map.remove(searchKey);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return map.containsKey((String) searchKey);
+    protected boolean isExist(String searchKey) {
+        return map.containsKey(searchKey);
     }
 
     @Override
-    protected Object getSearchKey(Object searchKey) {
+    protected String getSearchKey(String searchKey) {
         return searchKey;
     }
 }

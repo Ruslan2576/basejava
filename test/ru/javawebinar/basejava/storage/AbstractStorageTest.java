@@ -1,6 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.jupiter.api.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.javawebinar.basejava.exception.*;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -16,10 +18,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String SPECIAL_UUID = "specialUuid777";
-    private static final Resume RESUME_1 = new Resume(UUID_1, "");
-    private static final Resume RESUME_2 = new Resume(UUID_2, "");
-    private static final Resume RESUME_3 = new Resume(UUID_3, "");
-    private static final Resume SPECAL_RESUME = new Resume(SPECIAL_UUID, "");
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Name1");
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Name2");
+    private static final Resume RESUME_3 = new Resume(UUID_3, "Name3");
+    private static final Resume SPECAL_RESUME = new Resume(SPECIAL_UUID, "Name4");
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -41,7 +43,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume resumeTest = new Resume(UUID_1, "");
+        Resume resumeTest = new Resume(UUID_1, "New Name");
         storage.update(resumeTest);
         assertSame(resumeTest, storage.get(UUID_1));
     }
@@ -106,8 +108,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     void getAll() {
-        final List<Resume> expected = new ArrayList<>(List.of(new Resume(UUID_1, ""), new Resume(UUID_2, ""), new Resume(UUID_3, "")));
+        final List<Resume> expected = List.of(RESUME_1, RESUME_2, RESUME_3);
         assertEquals(expected, storage.getAllSorted());
+        assertEquals(expected.size(), storage.size());
     }
 
     @Test
