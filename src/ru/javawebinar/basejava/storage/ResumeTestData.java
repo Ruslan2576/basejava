@@ -125,12 +125,12 @@ public class ResumeTestData {
 
         var period4 = new Period(LocalDate.of(2023, 3, 1),
                 LocalDate.of(2023, 5, 1), "",
-                "'Functional Programming Principles in Scala' by Martin Odersky");
+                "'Functional Programming Principles in Scala' by Martin Odersky\n");
         var period5 = new Period(LocalDate.of(2011, 3, 1),
-                LocalDate.of(2011, 4, 1), "", "\n" +
-                "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'");
+                LocalDate.of(2011, 4, 1), "",
+                "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'\n");
         var period6 = new Period(LocalDate.of(2005, 1, 1),
-                LocalDate.of(2005, 4, 1), "", "\n" +
+                LocalDate.of(2005, 4, 1), "",
                 "3 месяца обучения мобильным IN сетям (Берлин)");
 
         var company4 = new Company("Coursera", "", List.of(period4));

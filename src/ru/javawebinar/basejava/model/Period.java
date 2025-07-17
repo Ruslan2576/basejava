@@ -1,6 +1,10 @@
 package ru.javawebinar.basejava.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 public class Period {
@@ -32,10 +36,8 @@ public class Period {
 
     @Override
     public String toString() {
-        if (title.isEmpty()) {
-            return startDate + "/" + endDate + title + description + "\n";
-        } else {
-            return startDate + "/" + endDate + "\n" + title + "\n" + description + "\n";
-        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/yyyy");
+        return dtf.format(startDate) + "-" + dtf.format(endDate) + "\n" + title +
+                (title.isEmpty() ? "" : "\n") + description;
     }
 }
