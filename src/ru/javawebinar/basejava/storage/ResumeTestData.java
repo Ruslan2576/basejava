@@ -5,11 +5,11 @@ import java.util.List;
 import ru.javawebinar.basejava.model.Company;
 import ru.javawebinar.basejava.model.CompanySection;
 import ru.javawebinar.basejava.model.ContactType;
-import ru.javawebinar.basejava.model.TextSection;
+import ru.javawebinar.basejava.model.ListSection;
 import ru.javawebinar.basejava.model.Period;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.model.SectionType;
-import ru.javawebinar.basejava.model.ListSection;
+import ru.javawebinar.basejava.model.TextSection;
 
 public class ResumeTestData {
     public static void main(String[] args) {

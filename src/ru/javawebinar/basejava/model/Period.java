@@ -26,7 +26,8 @@ public class Period {
         if (object == null || getClass() != object.getClass()) return false;
         Period period = (Period) object;
         return Objects.equals(startDate, period.startDate) &&
-                Objects.equals(endDate, period.endDate) && Objects.equals(title, period.title) && Objects.equals(description, period.description);
+                Objects.equals(endDate, period.endDate) && Objects.equals(title, period.title) &&
+                Objects.equals(description, period.description);
     }
 
     @Override
