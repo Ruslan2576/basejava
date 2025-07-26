@@ -3,10 +3,11 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class StringsSection extends Section {
+public class ListSection extends Section {
     private final List<String> strings;
 
-    public StringsSection(List<String> list) {
+    public ListSection(List<String> list) {
+        Objects.requireNonNull(list, "list mustn't be null");
         this.strings = list;
     }
 
@@ -23,7 +24,7 @@ public class StringsSection extends Section {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        StringsSection that = (StringsSection) object;
+        ListSection that = (ListSection) object;
         return Objects.equals(strings, that.strings);
     }
 

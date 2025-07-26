@@ -2,10 +2,11 @@ package ru.javawebinar.basejava.model;
 
 import java.util.Objects;
 
-public class ContentSection extends Section {
+public class TextSection extends Section {
     private final String content;
 
-    public ContentSection(String content) {
+    public TextSection(String content) {
+        Objects.requireNonNull(content, "content mustn't be null");
         this.content = content;
     }
 
@@ -22,7 +23,7 @@ public class ContentSection extends Section {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        ContentSection that = (ContentSection) object;
+        TextSection that = (TextSection) object;
         return Objects.equals(content, that.content);
     }
 

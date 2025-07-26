@@ -11,6 +11,9 @@ public class Period {
     private final String description;
 
     public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
+        Objects.requireNonNull(startDate, "startDate mustn't be null");
+        Objects.requireNonNull(endDate, "endDate mustn't be null");
+        Objects.requireNonNull(title, "title mustn't be null");
         this.startDate = startDate;
         this.endDate = endDate;
         this.title = title;
@@ -22,8 +25,8 @@ public class Period {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Period period = (Period) object;
-        return Objects.equals(startDate, period.startDate) && Objects.equals(endDate, period.endDate) &&
-                Objects.equals(title, period.title) && Objects.equals(description, period.description);
+        return Objects.equals(startDate, period.startDate) &&
+                Objects.equals(endDate, period.endDate) && Objects.equals(title, period.title) && Objects.equals(description, period.description);
     }
 
     @Override

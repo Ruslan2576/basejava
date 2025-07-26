@@ -18,10 +18,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String SPECIAL_UUID = "specialUuid777";
-    private static final Resume RESUME_1 = new Resume(UUID_1, "Name1");
-    private static final Resume RESUME_2 = new Resume(UUID_2, "Name2");
-    private static final Resume RESUME_3 = new Resume(UUID_3, "Name3");
-    private static final Resume SPECAL_RESUME = new Resume(SPECIAL_UUID, "Name4");
+    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
+    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Name2");
+    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Name3");
+    private static final Resume SPECAL_RESUME = ResumeTestData.createResume(SPECIAL_UUID, "Name4");
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -43,7 +43,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume resumeTest = new Resume(UUID_1, "New Name");
+        Resume resumeTest = ResumeTestData.createResume(UUID_1, "New Name");
         storage.update(resumeTest);
         assertSame(resumeTest, storage.get(UUID_1));
     }
@@ -70,12 +70,12 @@ public abstract class AbstractStorageTest {
         storage.clear();
         try {
             for (int i = 0; i < STORAGE_LIMIT; i++) {
-                storage.save(new Resume("uuid" + i + 1, ""));
+                storage.save(ResumeTestData.createResume("uuid" + i + 1, "name" + i + 1));
             }
         } catch (StorageException e) {
             fail("переполнение произошло раньше времени");
         }
-        assertThrows(StorageException.class, () -> storage.save(new Resume("uuid10001", "")));
+        assertThrows(StorageException.class, () -> storage.save(ResumeTestData.createResume("uuid10001", "name10001")));
     }
 
     @Test

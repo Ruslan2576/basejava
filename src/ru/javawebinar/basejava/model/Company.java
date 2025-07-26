@@ -5,11 +5,12 @@ import java.util.Objects;
 
 public class Company {
     private final String name;
-
     private final String website;
     private final List<Period> periods;
 
     public Company(String name, String website, List<Period> periods) {
+        Objects.requireNonNull(name, "name mustn't be null");
+        Objects.requireNonNull(periods, "periods mustn't be null");
         this.name = name;
         this.website = website;
         this.periods = periods;
@@ -31,6 +32,6 @@ public class Company {
 
     @Override
     public String toString() {
-        return name + "\n" + periods.toString() + "\n";
+        return name + "\n" + periods + "\n";
     }
 }

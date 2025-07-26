@@ -5,11 +5,11 @@ import java.util.List;
 import ru.javawebinar.basejava.model.Company;
 import ru.javawebinar.basejava.model.CompanySection;
 import ru.javawebinar.basejava.model.ContactType;
-import ru.javawebinar.basejava.model.ContentSection;
+import ru.javawebinar.basejava.model.TextSection;
 import ru.javawebinar.basejava.model.Period;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.model.SectionType;
-import ru.javawebinar.basejava.model.StringsSection;
+import ru.javawebinar.basejava.model.ListSection;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -73,8 +73,8 @@ public class ResumeTestData {
                 программирования
                 Родной русский, английский "upper intermediate\"""");
 
-        resume.setSections(SectionType.ACHIEVEMENT, new StringsSection(achievements));
-        resume.setSections(SectionType.QUALIFICATIONS, new StringsSection(qualifications));
+        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         resume.setContacts(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
         resume.setContacts(ContactType.SKYPE, "skype:grigory.kislin");
@@ -83,9 +83,9 @@ public class ResumeTestData {
         resume.setContacts(ContactType.GITHUB, "");
         resume.setContacts(ContactType.STACKOVERFLOW, "");
 
-        resume.setSections(SectionType.OBJECTIVE, new ContentSection("Ведущий стажировок и корпоративного" +
+        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
                 " обучения по Java Web и Enterprise технологиям"));
-        resume.setSections(SectionType.PERSONAL, new ContentSection("Аналитический склад ума, сильная" +
+        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
                 " логика, креативность, инициативность. Пурист кода и архитектуры."));
 
         String str1 = """
@@ -233,5 +233,35 @@ public class ResumeTestData {
             System.out.println(key.getTitle() + "\n" + sections.get(key).toString()
                     .replaceAll("[\\[\\]]", "") + "\n");
         }
+    }
+
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
+        resume.setContacts(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
+        resume.setContacts(ContactType.SKYPE, "skype:grigory.kislin");
+        resume.setContacts(ContactType.MAIL, "gkislin@yandex.ru");
+        resume.setContacts(ContactType.LINKEDIN, "");
+        resume.setContacts(ContactType.GITHUB, "");
+        resume.setContacts(ContactType.STACKOVERFLOW, "");
+
+        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
+                " логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
+                " обучения по Java Web и Enterprise технологиям"));
+
+        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements")));
+        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications")));
+
+        var period1 = new Period(LocalDate.of(2013, 10, 1),
+                LocalDate.now(), "Автор проекта", "str1");
+        resume.setSections(SectionType.EXPERIENCE, new CompanySection(List.of(
+                new Company("Java Online Projects", "", List.of(period1)))));
+
+        var period9 = new Period(LocalDate.of(2023, 3, 1),
+                LocalDate.of(2023, 5, 1), "",
+                "'Functional Programming Principles in Scala' by Martin Odersky\n");
+        resume.setSections(SectionType.EDUCATION, new CompanySection(List.of(new Company("Alcatel",
+                "", List.of(period9)))));
+        return resume;
     }
 }
