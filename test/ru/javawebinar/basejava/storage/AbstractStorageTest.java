@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.javawebinar.basejava.exception.*;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\Java\\basejava\\storage");
     protected final Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -45,7 +47,7 @@ public abstract class AbstractStorageTest {
     void update() {
         Resume resumeTest = ResumeTestData.createResume(UUID_1, "New Name");
         storage.update(resumeTest);
-        assertSame(resumeTest, storage.get(UUID_1));
+        assertEquals(resumeTest, storage.get(UUID_1));
     }
 
     @Test

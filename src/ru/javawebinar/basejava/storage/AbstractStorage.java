@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.storage;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -65,7 +66,8 @@ public abstract class AbstractStorage<T> implements Storage {
     public final List<Resume> getAllSorted() {
         LOG.info("getAllSorted");
         List<Resume> sortedResumes = doGetAll();
-        sortedResumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        Collections.sort(sortedResumes, Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        // sortedResumes.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return sortedResumes;
     }
 

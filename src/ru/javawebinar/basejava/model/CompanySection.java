@@ -1,10 +1,16 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class CompanySection extends Section {
+    private static final long serialVersionUID = 1L;
     private final List<Company> list;
+
+    public CompanySection(Company ... items) {
+        this(Arrays.asList(items));
+    }
 
     public CompanySection(List<Company> list) {
         Objects.requireNonNull(list, "list mustn't be null");
