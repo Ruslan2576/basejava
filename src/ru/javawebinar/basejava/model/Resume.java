@@ -1,6 +1,5 @@
 package ru.javawebinar.basejava.model;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;

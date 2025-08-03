@@ -1,18 +1,19 @@
 package ru.javawebinar.basejava.storage;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public abstract class AbstractFileStorage extends AbstractStorage<File> implements Strategy {
     private final File directory;
-
-    protected abstract Resume doRead(InputStream file) throws IOException;
-
-    protected abstract void doWrite(Resume resume, OutputStream file) throws IOException;
 
     public AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory mustn't be null");

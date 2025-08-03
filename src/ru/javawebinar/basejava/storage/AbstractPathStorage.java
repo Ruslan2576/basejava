@@ -1,23 +1,22 @@
 package ru.javawebinar.basejava.storage;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public abstract class AbstractPathStorage extends AbstractStorage<Path> implements Strategy {
     private final Path directory;
-
-    protected abstract Resume doRead(InputStream file) throws IOException;
-
-    protected abstract void doWrite(Resume resume, OutputStream file) throws IOException;
 
     protected AbstractPathStorage(String dir) {
         directory = Paths.get(dir);
