@@ -1,9 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.model.Resume;
-
 import java.io.File;
 import java.io.IOException;
+import ru.javawebinar.basejava.model.Resume;
 
 public class TestStrategy {
     public static void main(String[] args) throws IOException {

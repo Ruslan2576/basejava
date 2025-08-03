@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,8 +11,8 @@ import java.util.UUID;
  * Initial resume class.
  */
 public class Resume implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    // Unique identifier
     private final String uuid;
     private final String fullName;
     private final Map<ContactType, String> contacts = new LinkedHashMap<>();
