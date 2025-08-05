@@ -8,8 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.Strategy;
 
-public class ObjectStreamStorage extends AbstractFileStorage {
+public class ObjectStreamStorage extends AbstractFileStorage implements Strategy {
     public ObjectStreamStorage(File directory) {
         super(directory);
     }

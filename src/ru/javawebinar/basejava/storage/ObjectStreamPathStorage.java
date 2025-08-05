@@ -7,9 +7,10 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.Strategy;
 
-public class ObjectStreamPathStorage extends AbstractPathStorage {
-    protected ObjectStreamPathStorage(String dir) {
+public class ObjectStreamPathStorage extends AbstractPathStorage implements Strategy {
+    public ObjectStreamPathStorage(String dir) {
         super(dir);
     }
 

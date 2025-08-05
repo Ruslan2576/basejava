@@ -1,8 +1,11 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.strategy;
 
 import java.io.File;
 import java.io.IOException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.ObjectStreamPathStorage;
+import ru.javawebinar.basejava.storage.ObjectStreamStorage;
+import ru.javawebinar.basejava.storage.ResumeTestData;
 
 public class TestStrategy {
     public static void main(String[] args) throws IOException {

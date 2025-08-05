@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.strategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -8,13 +8,9 @@ import java.io.IOException;
 import ru.javawebinar.basejava.model.Resume;
 
 public class Context {
-    private Strategy strategy;
+    private final Strategy strategy;
 
     public Context(Strategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
     }
 

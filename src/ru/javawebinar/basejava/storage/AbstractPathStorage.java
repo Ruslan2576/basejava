@@ -2,20 +2,20 @@ package ru.javawebinar.basejava.storage;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> implements Strategy {
+public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     private final Path directory;
 
     protected AbstractPathStorage(String dir) {
@@ -29,10 +29,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
     @Override
     protected void doClear() {
         try {
-            List<Path> list = Files.list(directory).toList();
-            for (Path path : list) {
-                doDelete(path);
-            }
+            Files.list(directory).toList().forEach(this::doDelete);
         } catch (IOException e) {
             throw new StorageException("Path delete error", null);
         }
@@ -59,19 +56,17 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
 
     @Override
     protected Resume doGet(Path path) {
-        Resume resume;
         try {
-            resume = doRead(new BufferedInputStream((new FileInputStream(path.toString()))));
+            return doRead(new BufferedInputStream((new FileInputStream(path.toString()))));
         } catch (IOException e) {
             throw new StorageException("Path read error", path.getFileName().toString(), e);
         }
-        return resume;
     }
 
     @Override
     protected List<Resume> doGetAll() {
         try {
-            return new ArrayList<>(Files.list(directory).map(this::doGet).toList());
+            return Files.list(directory).map(this::doGet).toList();
         } catch (IOException e) {
             throw new StorageException("Directory read error", null);
         }
@@ -97,11 +92,15 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> implemen
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return new File(directory.toString(), uuid).toPath();
+        return directory.resolve(uuid);
     }
 
     @Override
     protected boolean isExist(Path path) {
         return Files.exists(path);
     }
+
+    public abstract void doWrite(Resume resume, OutputStream path) throws IOException;
+
+    public abstract Resume doRead(InputStream path) throws IOException;
 }
