@@ -1,26 +1,26 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.strategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.AbstractStorage;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
+    private final SerializerStrategy serializerStrategy;
     private final Path directory;
 
-    protected AbstractPathStorage(String dir) {
-        directory = Paths.get(dir);
+    public PathStorage(String dir, SerializerStrategy serializerStrategy) {
+        directory = Path.of(dir);
         Objects.requireNonNull(directory, "directory mustn't be null");
+        this.serializerStrategy = serializerStrategy;
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(directory + " isn't directory or isn't writable");
         }
@@ -48,7 +48,8 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Resume resume, Path path) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(path.toString())));
+            serializerStrategy.doWrite(resume,
+                    new BufferedOutputStream(new FileOutputStream(path.toString())));
         } catch (IOException e) {
             throw new StorageException("Path write error", resume.getUuid(), e);
         }
@@ -57,7 +58,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return doRead(new BufferedInputStream((new FileInputStream(path.toString()))));
+            return serializerStrategy.doRead(new BufferedInputStream(new FileInputStream(path.toString())));
         } catch (IOException e) {
             throw new StorageException("Path read error", path.getFileName().toString(), e);
         }
@@ -99,8 +100,4 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     protected boolean isExist(Path path) {
         return Files.exists(path);
     }
-
-    public abstract void doWrite(Resume resume, OutputStream path) throws IOException;
-
-    public abstract Resume doRead(InputStream path) throws IOException;
 }

@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.strategy;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,13 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.strategy.Strategy;
+import ru.javawebinar.basejava.storage.strategy.SerializerStrategy;
 
-public class ObjectStreamStorage extends AbstractFileStorage implements Strategy {
-    public ObjectStreamStorage(File directory) {
-        super(directory);
-    }
-
+public class ObjectStreamStorage implements SerializerStrategy {
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {

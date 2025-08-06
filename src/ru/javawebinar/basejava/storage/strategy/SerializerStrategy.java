@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import ru.javawebinar.basejava.model.Resume;
 
-public interface Strategy {
+public interface SerializerStrategy {
     Resume doRead(InputStream inputStream) throws IOException;
 
     void doWrite(Resume resume, OutputStream outputStream) throws IOException;

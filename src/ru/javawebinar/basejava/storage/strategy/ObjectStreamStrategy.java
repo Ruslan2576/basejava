@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava.storage.strategy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,13 +7,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.strategy.Strategy;
 
-public class ObjectStreamPathStorage extends AbstractPathStorage implements Strategy {
-    public ObjectStreamPathStorage(String dir) {
-        super(dir);
-    }
-
+public class ObjectStreamStrategy implements SerializerStrategy {
     @Override
     public void doWrite(Resume resume, OutputStream path) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(path)) {
