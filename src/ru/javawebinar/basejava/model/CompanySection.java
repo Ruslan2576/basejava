@@ -40,10 +40,6 @@ public class CompanySection extends Section {
         return Objects.hash(list);
     }
 
-    public List<Company> getList() {
-        return list;
-    }
-
     public List<Company> getCompanies() {
         return list;
     }

@@ -43,8 +43,4 @@ public class ListSection extends Section {
     public int hashCode() {
         return Objects.hash(strings);
     }
-
-    public List<String> getItems() {
-        return strings;
-    }
 }

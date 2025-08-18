@@ -101,7 +101,7 @@ public class DataStreamSerializer implements SerializerStrategy {
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) section).getContent());
                     case ACHIEVEMENT, QUALIFICATIONS -> {
-                        List<String> items = ((ListSection) section).getItems();
+                        List<String> items = ((ListSection) section).getStrings();
                         dos.writeInt(items.size());
                         for (String item : items) {
                             dos.writeUTF(item);
