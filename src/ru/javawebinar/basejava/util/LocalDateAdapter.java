@@ -1,7 +1,7 @@
 package ru.javawebinar.basejava.util;
 
-import java.time.LocalDate;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import java.time.LocalDate;
 
 public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
     @Override

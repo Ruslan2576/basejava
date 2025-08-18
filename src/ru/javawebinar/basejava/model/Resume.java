@@ -1,14 +1,14 @@
 package ru.javawebinar.basejava.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * Initial resume class.
@@ -66,7 +66,8 @@ public class Resume implements Serializable {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Resume resume = (Resume) object;
-        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName) && Objects.equals(contacts, resume.contacts) && Objects.equals(sections, resume.sections);
+        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName) &&
+                Objects.equals(contacts, resume.contacts) && Objects.equals(sections, resume.sections);
     }
 
     @Override
