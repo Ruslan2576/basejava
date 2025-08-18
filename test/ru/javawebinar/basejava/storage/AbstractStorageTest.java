@@ -9,7 +9,6 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

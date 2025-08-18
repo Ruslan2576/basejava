@@ -7,7 +7,7 @@ import java.io.Writer;
 import ru.javawebinar.basejava.model.Section;
 
 public class JsonParser {
-    private static Gson GSON = new GsonBuilder()
+    private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Section.class, new JsonSectionAdapter())
             .create();
 
