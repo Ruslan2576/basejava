@@ -1,15 +1,25 @@
 package ru.javawebinar.basejava.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import ru.javawebinar.basejava.util.LocalDateAdapter;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String title;
-    private final String description;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate startDate;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    private LocalDate endDate;
+    private String title;
+    private String description;
+
+    public Period() {
+    }
 
     public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
         Objects.requireNonNull(startDate, "startDate mustn't be null");
@@ -41,5 +51,21 @@ public class Period implements Serializable {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/yyyy");
         return dtf.format(startDate) + "-" + dtf.format(endDate) + "\n" + title +
                 (title.isEmpty() ? "" : "\n") + description;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

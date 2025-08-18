@@ -6,15 +6,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * Initial resume class.
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private final String uuid;
-    private final String fullName;
+    private String uuid;
+    private String fullName;
     private final Map<ContactType, String> contacts = new LinkedHashMap<>();
     private final Map<SectionType, Section> sections = new LinkedHashMap<>();
 
@@ -38,6 +43,9 @@ public class Resume implements Serializable {
         this(UUID.randomUUID().toString(), fullName);
     }
 
+    public Resume() {
+    }
+
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "uuid mustn't be null");
         Objects.requireNonNull(fullName, "fullName mustn't be null");
@@ -58,12 +66,12 @@ public class Resume implements Serializable {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Resume resume = (Resume) object;
-        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName);
+        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName) && Objects.equals(contacts, resume.contacts) && Objects.equals(sections, resume.sections);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
+        return Objects.hash(uuid, fullName, contacts, sections);
     }
 
     @Override

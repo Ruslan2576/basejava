@@ -1,12 +1,17 @@
 package ru.javawebinar.basejava.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class CompanySection extends Section {
     private static final long serialVersionUID = 1L;
-    private final List<Company> list;
+    private List<Company> list;
+
+    public CompanySection() {
+    }
 
     public CompanySection(Company ... items) {
         this(Arrays.asList(items));
@@ -36,6 +41,10 @@ public class CompanySection extends Section {
     }
 
     public List<Company> getList() {
+        return list;
+    }
+
+    public List<Company> getCompanies() {
         return list;
     }
 }

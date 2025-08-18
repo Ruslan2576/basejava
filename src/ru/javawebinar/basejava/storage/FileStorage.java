@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.storage.strategy;
+package ru.javawebinar.basejava.storage;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.AbstractStorage;
+import ru.javawebinar.basejava.storage.strategy.SerializerStrategy;
 
 public class FileStorage extends AbstractStorage<File> {
     private final SerializerStrategy serializerStrategy;
@@ -87,7 +87,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
-            throw new StorageException("File delete error", file.getName());
+            throw new StorageException("File delete error");
         }
     }
 
@@ -104,7 +104,7 @@ public class FileStorage extends AbstractStorage<File> {
     private static File[] createAndCheckDir(File directory, String message) {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException(message, directory.getName());
+            throw new StorageException(message);
         }
         return files;
     }

@@ -6,7 +6,10 @@ import java.util.Objects;
 
 public class ListSection extends Section {
     private static final long serialVersionUID = 1L;
-    private final List<String> strings;
+    private List<String> strings;
+
+    public ListSection() {
+    }
 
     public ListSection(String ... items) {
         this(Arrays.asList(items));
@@ -37,5 +40,9 @@ public class ListSection extends Section {
     @Override
     public int hashCode() {
         return Objects.hash(strings);
+    }
+
+    public List<String> getItems() {
+        return strings;
     }
 }

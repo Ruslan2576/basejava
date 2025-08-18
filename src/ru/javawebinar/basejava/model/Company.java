@@ -1,14 +1,20 @@
 package ru.javawebinar.basejava.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Company implements Serializable {
     private static final long serialVersionUID = 1L;
-    private final String name;
-    private final String website;
-    private final List<Period> periods;
+    private String name;
+    private String website;
+    private List<Period> periods;
+
+    public Company() {
+    }
 
     public Company(String name, String website, List<Period> periods) {
         Objects.requireNonNull(name, "name mustn't be null");
@@ -16,6 +22,18 @@ public class Company implements Serializable {
         this.name = name;
         this.website = website;
         this.periods = periods;
+    }
+
+    public List<Period> getPeriods() {
+        return periods;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getWebsite() {
+        return website;
     }
 
     @Override
