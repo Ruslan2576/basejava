@@ -83,12 +83,10 @@ public class DataStreamSerializer implements SerializerStrategy {
             dos.writeUTF(resume.getFullName());
 
             // Записать контакты
-            Map<ContactType, String> contacts = resume.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
-                dos.writeUTF(entry.getKey().name());
-                dos.writeUTF(entry.getValue());
-            }
+            writeContacts(dos, resume.getContacts(), element -> {
+                dos.writeUTF(element.getKey().name());
+                dos.writeUTF(element.getValue());
+            });
 
             // Записать секции
             Map<SectionType, Section> sections = resume.getSections();
@@ -126,6 +124,20 @@ public class DataStreamSerializer implements SerializerStrategy {
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
             }
+        }
+    }
+
+    @FunctionalInterface
+    public interface Writer {
+        void writeWithException(Map.Entry<ContactType, String> element) throws IOException;
+    }
+
+    private void writeContacts(DataOutputStream dos, Map<ContactType, String> contacts, Writer writer)
+            throws IOException {
+        int size = contacts.size();
+        dos.writeInt(size);
+        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            writer.writeWithException(entry);
         }
     }
 }
