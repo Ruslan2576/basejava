@@ -97,18 +97,16 @@ public class DataStreamSerializer implements SerializerStrategy {
                     case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) section).getContent());
                     case ACHIEVEMENT, QUALIFICATIONS ->
                             writeData(dos, ((ListSection) section).getStrings(), dos::writeUTF);
-                    case EXPERIENCE, EDUCATION -> {
-                        writeData(dos, ((CompanySection) section).getCompanies(), company -> {
-                            dos.writeUTF(company.getName());
-                            dos.writeUTF(company.getWebsite());
-                            writeData(dos, company.getPeriods(), period -> {
-                                dos.writeUTF(period.getTitle());
-                                dos.writeUTF(period.getDescription());
-                                dos.writeUTF(period.getStartDate().toString());
-                                dos.writeUTF(period.getEndDate().toString());
-                            });
+                    case EXPERIENCE, EDUCATION -> writeData(dos, ((CompanySection) section).getCompanies(), company -> {
+                        dos.writeUTF(company.getName());
+                        dos.writeUTF(company.getWebsite());
+                        writeData(dos, company.getPeriods(), period -> {
+                            dos.writeUTF(period.getTitle());
+                            dos.writeUTF(period.getDescription());
+                            dos.writeUTF(period.getStartDate().toString());
+                            dos.writeUTF(period.getEndDate().toString());
                         });
-                    }
+                    });
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
             });
