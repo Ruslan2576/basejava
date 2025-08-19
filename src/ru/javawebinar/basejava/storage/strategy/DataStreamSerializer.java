@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import ru.javawebinar.basejava.model.Company;
 import ru.javawebinar.basejava.model.CompanySection;
 import ru.javawebinar.basejava.model.ContactType;
@@ -83,19 +83,16 @@ public class DataStreamSerializer implements SerializerStrategy {
             dos.writeUTF(resume.getFullName());
 
             // Записать контакты
-            writeContacts(dos, resume.getContacts(), element -> {
+            writeData(dos, resume.getContacts().entrySet(), element -> {
                 dos.writeUTF(element.getKey().name());
                 dos.writeUTF(element.getValue());
             });
 
             // Записать секции
-            Map<SectionType, Section> sections = resume.getSections();
-            dos.writeInt(sections.size());
-            for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
-                SectionType sectionType = entry.getKey();
-                Section section = entry.getValue();
+            writeData(dos, resume.getSections().entrySet(), element -> {
+                SectionType sectionType = element.getKey();
+                Section section = element.getValue();
                 dos.writeUTF(sectionType.name());
-
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) section).getContent());
                     case ACHIEVEMENT, QUALIFICATIONS -> {
@@ -123,21 +120,19 @@ public class DataStreamSerializer implements SerializerStrategy {
                     }
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
-            }
+            });
         }
     }
 
     @FunctionalInterface
-    public interface Writer {
-        void writeWithException(Map.Entry<ContactType, String> element) throws IOException;
+    public interface Writer<T> {
+        void writeWithException(T element) throws IOException;
     }
 
-    private void writeContacts(DataOutputStream dos, Map<ContactType, String> contacts, Writer writer)
-            throws IOException {
-        int size = contacts.size();
-        dos.writeInt(size);
-        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
-            writer.writeWithException(entry);
+    private <T> void writeData(DataOutputStream dos, Collection<T> collection, Writer<T> writer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T element : collection) {
+            writer.writeWithException(element);
         }
     }
 }
