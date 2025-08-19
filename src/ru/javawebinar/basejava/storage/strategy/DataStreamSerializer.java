@@ -95,28 +95,19 @@ public class DataStreamSerializer implements SerializerStrategy {
                 dos.writeUTF(sectionType.name());
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) section).getContent());
-                    case ACHIEVEMENT, QUALIFICATIONS -> {
-                        List<String> items = ((ListSection) section).getStrings();
-                        dos.writeInt(items.size());
-                        for (String item : items) {
-                            dos.writeUTF(item);
-                        }
-                    }
+                    case ACHIEVEMENT, QUALIFICATIONS ->
+                            writeData(dos, ((ListSection) section).getStrings(), dos::writeUTF);
                     case EXPERIENCE, EDUCATION -> {
-                        List<Company> companies = ((CompanySection) section).getCompanies();
-                        dos.writeInt(companies.size());
-                        for (Company company : companies) {
+                        writeData(dos, ((CompanySection) section).getCompanies(), company -> {
                             dos.writeUTF(company.getName());
                             dos.writeUTF(company.getWebsite());
-                            List<Period> periods = company.getPeriods();
-                            dos.writeInt(periods.size());
-                            for (Period period : periods) {
+                            writeData(dos, company.getPeriods(), period -> {
                                 dos.writeUTF(period.getTitle());
                                 dos.writeUTF(period.getDescription());
                                 dos.writeUTF(period.getStartDate().toString());
                                 dos.writeUTF(period.getEndDate().toString());
-                            }
-                        }
+                            });
+                        });
                     }
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
@@ -129,7 +120,8 @@ public class DataStreamSerializer implements SerializerStrategy {
         void writeWithException(T element) throws IOException;
     }
 
-    private <T> void writeData(DataOutputStream dos, Collection<T> collection, Writer<T> writer) throws IOException {
+    private <T> void writeData(DataOutputStream dos, Collection<T> collection, Writer<T> writer)
+            throws IOException {
         dos.writeInt(collection.size());
         for (T element : collection) {
             writer.writeWithException(element);
