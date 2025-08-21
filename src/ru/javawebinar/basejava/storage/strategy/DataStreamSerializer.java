@@ -28,50 +28,41 @@ public class DataStreamSerializer implements SerializerStrategy {
             Resume resume = new Resume(uuid, fullName);
 
             // Читаем контакты
-            int contactsSize = dis.readInt();
-            for (int i = 0; i < contactsSize; i++) {
-                resume.setContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-            }
+            readData(dis, () -> resume.setContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
 
             // Читаем секции
-            int sectionSize = dis.readInt();
-            for (int i = 0; i < sectionSize; i++) {
+            readData(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 Section section;
                 switch (sectionType) {
                     case PERSONAL, OBJECTIVE -> section = new TextSection(dis.readUTF());
                     case ACHIEVEMENT, QUALIFICATIONS -> {
-                        int listSize = dis.readInt();
-                        List<String> items = new ArrayList<>(listSize);
-                        for (int j = 0; j < listSize; j++) {
-                            items.add(dis.readUTF());
-                        }
+                        List<String> items = new ArrayList<>();
+                        readData(dis, () -> items.add(dis.readUTF()));
                         section = new ListSection(items);
                     }
                     case EXPERIENCE, EDUCATION -> {
-                        int companySize = dis.readInt();
-                        List<Company> companies = new ArrayList<>(companySize);
-                        for (int j = 0; j < companySize; j++) {
+                        List<Company> companies = new ArrayList<>();
+                        readData(dis, () -> {
                             String name = dis.readUTF();
                             String website = dis.readUTF();
-                            int periodSize = dis.readInt();
-                            List<Period> periods = new ArrayList<>(periodSize);
-                            for (int k = 0; k < periodSize; k++) {
+                            List<Period> periods = new ArrayList<>();
+                            readData(dis, () -> {
                                 String title = dis.readUTF();
                                 String description = dis.readUTF();
                                 String startDate = dis.readUTF();
                                 String endDate = dis.readUTF();
                                 periods.add(new Period(LocalDate.parse(startDate), LocalDate.parse(endDate),
                                         title, description));
-                            }
+                            });
                             companies.add(new Company(name, website, periods));
-                        }
+                        });
                         section = new CompanySection(companies);
                     }
                     default -> throw new IllegalStateException("Unexpected value: " + sectionType);
                 }
                 resume.setSections(sectionType, section);
-            }
+            });
             return resume;
         }
     }
@@ -123,6 +114,18 @@ public class DataStreamSerializer implements SerializerStrategy {
         dos.writeInt(collection.size());
         for (T element : collection) {
             writer.writeWithException(element);
+        }
+    }
+
+    @FunctionalInterface
+    public interface Reader {
+        void readWithException() throws IOException;
+    }
+
+    private void readData(DataInputStream dis, Reader reader) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            reader.readWithException();
         }
     }
 }
