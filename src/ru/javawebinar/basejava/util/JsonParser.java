@@ -5,12 +5,11 @@ import com.google.gson.GsonBuilder;
 import java.io.Reader;
 import java.io.Writer;
 import java.time.LocalDate;
-
 import ru.javawebinar.basejava.model.Section;
 
 public class JsonParser {
     private static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(Section.class, new JsonSectionAdapter())
+            .registerTypeAdapter(Section.class, new JsonSectionAdapter<>())
             .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
             .create();
 
