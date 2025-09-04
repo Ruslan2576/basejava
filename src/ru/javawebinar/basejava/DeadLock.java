@@ -5,24 +5,20 @@ public class DeadLock {
     private static final Object TWO = new Object();
 
     public static void main(String[] args) {
+        doIt(ONE, TWO);
+        doIt(TWO, ONE);
+    }
+
+    public static void doIt(Object one, Object two) {
         new Thread(() -> {
-            synchronized (ONE) {
+            synchronized (one) {
                 System.out.println("Hello ");
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                synchronized (TWO) {
-                    System.out.println("world!");
-                }
-            }
-        }).start();
-
-        new Thread(() -> {
-            synchronized (TWO) {
-                System.out.println("Goodbye ");
-                synchronized (ONE) {
+                synchronized (two) {
                     System.out.println("world!");
                 }
             }
