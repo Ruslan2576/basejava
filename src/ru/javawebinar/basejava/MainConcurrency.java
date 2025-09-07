@@ -2,12 +2,14 @@ package ru.javawebinar.basejava;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 public class MainConcurrency {
     public static final int THREADS_NUMBER = 10_000;
     private static int counter;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
 
         Thread thread0 = new Thread() {
@@ -24,23 +26,28 @@ public class MainConcurrency {
         System.out.println(thread0.getState());
 
         MainConcurrency mainConcurrency = new MainConcurrency();
-        List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
+        CountDownLatch latch = new CountDownLatch(THREADS_NUMBER);
+        // List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
         for (int i = 0; i < THREADS_NUMBER; i++) {
             Thread thread = new Thread(() -> {
                 for (int j = 0; j < 100; j++) {
                     mainConcurrency.inc();
                 }
+                latch.countDown();
             });
             thread.start();
-            threads.add(thread);
+            // threads.add(thread);
         }
-        threads.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+//
+//        threads.forEach(t -> {
+//            try {
+//                t.join();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+
+        latch.await(10, TimeUnit.SECONDS);
         System.out.println(counter);
     }
 
