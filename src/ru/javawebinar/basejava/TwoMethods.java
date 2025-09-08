@@ -1,6 +1,8 @@
 package ru.javawebinar.basejava;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,12 +26,11 @@ public class TwoMethods {
 //                .sum() % 2 != 0;
 //
 //        return integers.stream()
-//                .filter(num -> isOdd == (num % 2 != 0))
-        //                .collect(Collectors.toList());
+//              .filter(num -> isOdd == (num % 2 != 0))
+        //      .collect(Collectors.toList());
 
         return integers.stream()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.summingInt(Integer::intValue),
+                .collect(Collectors.collectingAndThen(Collectors.summingInt(Integer::intValue),
                         sum -> integers.stream()
                                 .filter(num -> (sum % 2 != 0) == (num % 2 != 0))
                                 .collect(Collectors.toList())));
