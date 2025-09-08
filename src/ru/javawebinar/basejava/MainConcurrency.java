@@ -1,11 +1,21 @@
 package ru.javawebinar.basejava;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainConcurrency {
+    private static final AtomicInteger atomicCounter = new AtomicInteger();
     public static final int THREADS_NUMBER = 10_000;
     private static int counter;
+    private static Lock lock = new ReentrantLock();
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println(Thread.currentThread().getName());
@@ -24,17 +34,25 @@ public class MainConcurrency {
         System.out.println(thread0.getState());
 
         MainConcurrency mainConcurrency = new MainConcurrency();
+        ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        // CompletionService completion = new ExecutorCompletionService(exec);
+
         CountDownLatch latch = new CountDownLatch(THREADS_NUMBER);
         // List<Thread> threads = new ArrayList<>(THREADS_NUMBER);
         for (int i = 0; i < THREADS_NUMBER; i++) {
-            Thread thread = new Thread(() -> {
+            Future<Integer> future = exec.submit(() -> {
+//            Thread thread = new Thread(() -> {
                 for (int j = 0; j < 100; j++) {
                     mainConcurrency.inc();
+                    // System.out.println(dtf.getLocale());
                 }
                 latch.countDown();
+                return 0;
             });
-            thread.start();
-            // threads.add(thread);
+            // completion.poll();
+
+//            thread.start();
+//            threads.add(thread);
         }
 //
 //        threads.forEach(t -> {
@@ -46,12 +64,20 @@ public class MainConcurrency {
 //        });
 
         latch.await(10, TimeUnit.SECONDS);
+        exec.shutdown();
         System.out.println(counter);
+        System.out.println(atomicCounter.get());
     }
 
     private void inc() {
-        synchronized (this) {
-            counter++;
-        }
+        atomicCounter.incrementAndGet();
+//        // synchronized (this) {
+//        lock.lock();
+//        try {
+//            counter++;
+//        } finally {
+//            lock.unlock();
+//        }
+//       }
     }
 }

@@ -16,8 +16,7 @@ public class TwoMethods {
         return IntStream.of(values)
                 .distinct()
                 .sorted()
-                .reduce((acc, x) -> acc * 10 + x)
-                .getAsInt();
+                .reduce(0, (acc, x) -> acc * 10 + x);
     }
 
     static List<Integer> oddOrEven(List<Integer> integers) {
