@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.storage;
 
+import java.sql.SQLException;
 import java.util.List;
 import ru.javawebinar.basejava.model.Resume;
 
