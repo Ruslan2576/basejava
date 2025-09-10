@@ -7,9 +7,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
+    private static final File PROPS = new File("config\\resumes.properties");
     private static final Config INSTANCE = new Config();
-
-    private final File prop = new File("C:\\Java\\basejava\\config\\resumes.properties");
     private final File storageDir;
 
     public File getStorageDir() {
@@ -17,12 +16,12 @@ public class Config {
     }
 
     private Config() {
-        try (InputStream is = new FileInputStream(prop)) {
+        try (InputStream is = new FileInputStream(PROPS)) {
             Properties prop = new Properties();
             prop.load(is);
             storageDir = new File(prop.getProperty("storage.dir"));
         } catch (IOException e) {
-            throw new IllegalStateException("Invalid config file " + prop.getAbsolutePath());
+            throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
         }
     }
 
