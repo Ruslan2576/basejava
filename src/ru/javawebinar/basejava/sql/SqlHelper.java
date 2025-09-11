@@ -15,7 +15,7 @@ public class SqlHelper {
     public <T> T blockExecute(String query, ABlockOfCode<T> blockOfCode) {
         try (Connection connection = connectionFactory.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            return blockOfCode.execute(ps);
+            return blockOfCode.myExecute(ps);
         } catch (SQLException e) {
             if (e.getSQLState().equals("23505")) {
                 throw new ExistStorageException(e);
