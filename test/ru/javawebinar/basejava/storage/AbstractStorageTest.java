@@ -22,7 +22,7 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String SPECIAL_UUID = "specialUuid777";
-//    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
+    //    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
 //    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Name2");
 //    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Name3");
 //    private static final Resume SPECAL_RESUME = ResumeTestData.createResume(SPECIAL_UUID, "Name4");
@@ -30,6 +30,7 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_2 = new Resume(UUID_2, "Name2");
     private static final Resume RESUME_3 = new Resume(UUID_3, "Name3");
     private static final Resume SPECIAL_RESUME = new Resume(SPECIAL_UUID, "Name4");
+
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
