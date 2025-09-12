@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.model;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -51,6 +52,10 @@ public class Resume implements Serializable {
         Objects.requireNonNull(fullName, "fullName mustn't be null");
         this.uuid = uuid;
         this.fullName = fullName;
+    }
+
+    public Resume(UUID uuid, String name1) {
+        this(uuid.toString(), name1);
     }
 
     public String getUuid() {

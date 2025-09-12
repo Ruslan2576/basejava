@@ -11,6 +11,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
@@ -18,18 +19,18 @@ import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.getInstance().getStorageDir();
     protected final Storage storage;
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String SPECIAL_UUID = "specialUuid777";
-    //    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
+    //    private static final String UUID_1 = "uuid1";
+//    private static final String UUID_2 = "uuid2";
+//    private static final String UUID_3 = "uuid3";
+//    private static final String SPECIAL_UUID = "specialUuid777";
+//    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Name1");
 //    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Name2");
 //    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Name3");
-//    private static final Resume SPECAL_RESUME = ResumeTestData.createResume(SPECIAL_UUID, "Name4");
-    private static final Resume RESUME_1 = new Resume(UUID_1, "Name1");
-    private static final Resume RESUME_2 = new Resume(UUID_2, "Name2");
-    private static final Resume RESUME_3 = new Resume(UUID_3, "Name3");
-    private static final Resume SPECIAL_RESUME = new Resume(SPECIAL_UUID, "Name4");
+//    private static final Resume SPECiAL_RESUME = ResumeTestData.createResume(SPECIAL_UUID, "Name4");
+    private static final Resume RESUME_1 = new Resume(UUID.randomUUID(), "Name1");
+    private static final Resume RESUME_2 = new Resume(UUID.randomUUID(), "Name2");
+    private static final Resume RESUME_3 = new Resume(UUID.randomUUID(), "Name3");
+    private static final Resume SPECIAL_RESUME = new Resume(UUID.randomUUID(), "Name4");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -53,9 +54,9 @@ public abstract class AbstractStorageTest {
     @Test
     void update() {
         // Resume resumeTest = ResumeTestData.createResume(UUID_1, "New Name");
-        Resume resumeTest = new Resume(UUID_1, "New Name1");
+        Resume resumeTest = new Resume(RESUME_1.getUuid(), "New Name1");
         storage.update(resumeTest);
-        assertEquals(resumeTest, storage.get(UUID_1));
+        assertEquals(resumeTest, storage.get(RESUME_1.getUuid()));
     }
 
     @Test
@@ -106,9 +107,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     void delete() {
-        storage.delete("uuid1");
+        storage.delete(RESUME_1.getUuid());
         assertSize(2);
-        assertThrows(NotExistStorageException.class, () -> storage.get("uuid1"));
+        assertThrows(NotExistStorageException.class, () -> storage.get(RESUME_1.getUuid()));
     }
 
     @Test
