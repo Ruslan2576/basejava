@@ -243,25 +243,25 @@ public class ResumeTestData {
         resume.setContacts(ContactType.LINKEDIN, "");
         resume.setContacts(ContactType.GITHUB, "");
         resume.setContacts(ContactType.STACKOVERFLOW, "");
-
-        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
-                " логика, креативность, инициативность. Пурист кода и архитектуры."));
-        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
-                " обучения по Java Web и Enterprise технологиям"));
-
-        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements")));
-        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications")));
-
-        var period1 = new Period(LocalDate.of(2013, 10, 1),
-                LocalDate.now(), "Автор проекта", "str1");
-        resume.setSections(SectionType.EXPERIENCE, new CompanySection(List.of(
-                new Company("Java Online Projects", "", List.of(period1)))));
-
-        var period9 = new Period(LocalDate.of(2023, 3, 1),
-                LocalDate.of(2023, 5, 1), "",
-                "'Functional Programming Principles in Scala' by Martin Odersky\n");
-        resume.setSections(SectionType.EDUCATION, new CompanySection(List.of(new Company("Alcatel",
-                "", List.of(period9)))));
+//
+//        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
+//                " логика, креативность, инициативность. Пурист кода и архитектуры."));
+//        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
+//                " обучения по Java Web и Enterprise технологиям"));
+//
+//        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements")));
+//        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications")));
+//
+//        var period1 = new Period(LocalDate.of(2013, 10, 1),
+//                LocalDate.now(), "Автор проекта", "str1");
+//        resume.setSections(SectionType.EXPERIENCE, new CompanySection(List.of(
+//                new Company("Java Online Projects", "", List.of(period1)))));
+//
+//        var period9 = new Period(LocalDate.of(2023, 3, 1),
+//                LocalDate.of(2023, 5, 1), "",
+//                "'Functional Programming Principles in Scala' by Martin Odersky\n");
+//        resume.setSections(SectionType.EDUCATION, new CompanySection(List.of(new Company("Alcatel",
+//                "", List.of(period9)))));
         return resume;
     }
 }

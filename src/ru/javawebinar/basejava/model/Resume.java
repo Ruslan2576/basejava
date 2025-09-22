@@ -54,10 +54,6 @@ public class Resume implements Serializable {
         this.fullName = fullName;
     }
 
-    public Resume(UUID uuid, String name1) {
-        this(uuid.toString(), name1);
-    }
-
     public String getUuid() {
         return uuid;
     }
