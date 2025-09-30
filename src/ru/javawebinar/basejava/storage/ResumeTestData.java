@@ -73,8 +73,6 @@ public class ResumeTestData {
                 программирования
                 Родной русский, английский "upper intermediate\"""");
 
-        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(achievements));
-        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
 
         resume.setContacts(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
         resume.setContacts(ContactType.SKYPE, "skype:grigory.kislin");
@@ -87,6 +85,9 @@ public class ResumeTestData {
                 " обучения по Java Web и Enterprise технологиям"));
         resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
                 " логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(achievements));
+        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+
 
         String str1 = """
                 Создание, организация и проведение Java онлайн проектов и стажировок.

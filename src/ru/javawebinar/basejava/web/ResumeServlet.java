@@ -23,9 +23,6 @@ public class ResumeServlet extends HttpServlet {
                 "<td>" + r.getUuid() + "</td>" +
                 "<td>" + r.getFullName() + "</td>" +
                 "</tr>" +
-                "<tr>" +
-                "<td>" + r.getSections() + "</td>" +
-                "</tr>" +
                 "</table>");
     }
 }
