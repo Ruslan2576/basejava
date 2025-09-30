@@ -11,8 +11,6 @@ import java.util.UUID;
 
 @WebServlet("/resume")
 public class ResumeServlet extends HttpServlet {
-
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Resume r = ResumeTestData.createResume(UUID.randomUUID().toString(), "Ivan");
         response.setContentType("text/html");
