@@ -1,7 +1,9 @@
 package ru.javawebinar.basejava.storage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
 import ru.javawebinar.basejava.model.Company;
 import ru.javawebinar.basejava.model.CompanySection;
 import ru.javawebinar.basejava.model.ContactType;
@@ -96,7 +98,7 @@ public class ResumeTestData {
                 Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API,
                 Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная
                 аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.
-                 """;
+                """;
 
         String str3 = """
                 Организация процесса разработки системы ERP для разных окружений: релизная политика,
@@ -243,15 +245,15 @@ public class ResumeTestData {
         resume.setContacts(ContactType.LINKEDIN, "");
         resume.setContacts(ContactType.GITHUB, "");
         resume.setContacts(ContactType.STACKOVERFLOW, "");
-//
-//        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
-//                " логика, креативность, инициативность. Пурист кода и архитектуры."));
-//        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
-//                " обучения по Java Web и Enterprise технологиям"));
-//
-//        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements")));
-//        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications")));
-//
+
+        resume.setSections(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
+                " логика, креативность, инициативность. Пурист кода и архитектуры."));
+        resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
+                " обучения по Java Web и Enterprise технологиям"));
+
+        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements")));
+        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications")));
+
 //        var period1 = new Period(LocalDate.of(2013, 10, 1),
 //                LocalDate.now(), "Автор проекта", "str1");
 //        resume.setSections(SectionType.EXPERIENCE, new CompanySection(List.of(

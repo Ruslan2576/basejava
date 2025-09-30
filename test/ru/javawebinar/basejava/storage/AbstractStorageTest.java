@@ -10,6 +10,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +51,6 @@ public abstract class AbstractStorageTest {
     @Test
     void update() {
         Resume resumeTest = ResumeTestData.createResume(UUID_1, "New Name");
-        // Resume resumeTest = new Resume(RESUME_1.getUuid(), "New Name1");
         storage.update(resumeTest);
         assertEquals(resumeTest, storage.get(RESUME_1.getUuid()));
     }
@@ -115,7 +115,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void getAll() {
-        final List<Resume> expected = List.of(RESUME_1, RESUME_2, RESUME_3);
+        List<Resume> expected = new ArrayList<>(Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
         assertEquals(expected, storage.getAllSorted());
         assertEquals(expected.size(), storage.size());
     }
