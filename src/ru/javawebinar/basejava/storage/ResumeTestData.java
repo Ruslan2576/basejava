@@ -1,9 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 import ru.javawebinar.basejava.model.Company;
 import ru.javawebinar.basejava.model.CompanySection;
 import ru.javawebinar.basejava.model.ContactType;
