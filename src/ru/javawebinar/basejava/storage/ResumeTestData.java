@@ -250,8 +250,8 @@ public class ResumeTestData {
         resume.setSections(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
                 " обучения по Java Web и Enterprise технологиям"));
 
-        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements")));
-        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications")));
+        resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements", "some text")));
+        resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications", "some text")));
 
 //        var period1 = new Period(LocalDate.of(2013, 10, 1),
 //                LocalDate.now(), "Автор проекта", "str1");
