@@ -120,27 +120,31 @@ public class SqlStorage implements Storage {
                 map.put(uuid, new Resume(uuid, rs.getString("full_name")));
             }
 
-            sqlHelper.blockExecute("SELECT * FROM contact WHERE resume_uuid = ?", psContact -> {
+            sqlHelper.blockExecute("SELECT * FROM contact" +
+                                        "   JOIN section ON contact.resume_uuid = section.resume_uuid" +
+                                        "  WHERE contact.resume_uuid = ?", psContact -> {
                 for (var r : map.values()) {
                     psContact.setString(1, r.getUuid());
                     var rsContact = psContact.executeQuery();
                     while (rsContact.next()) {
                         addContacts(r, rsContact);
+                        addSections(r, rsContact);
                     }
                 }
                 return null;
             });
 
-            sqlHelper.blockExecute("SELECT * FROM section WHERE resume_uuid = ?", psSection -> {
-                for (var r : map.values()) {
-                    psSection.setString(1, r.getUuid());
-                    var rsSection = psSection.executeQuery();
-                    while (rsSection.next()) {
-                        addSections(r, rsSection);
-                    }
-                }
-                return null;
-            });
+            // Либо так?
+//            sqlHelper.blockExecute("SELECT * FROM section WHERE resume_uuid = ?", psSection -> {
+//                for (var r : map.values()) {
+//                    psSection.setString(1, r.getUuid());
+//                    var rsSection = psSection.executeQuery();
+//                    while (rsSection.next()) {
+//                        addSections(r, rsSection);
+//                    }
+//                }
+//                return null;
+//            });
             return new ArrayList<>(map.values());
         });
     }
