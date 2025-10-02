@@ -111,39 +111,40 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.transactionExecute(conn -> {
+        return sqlHelper.blockExecute("SELECT * FROM resume ORDER BY full_name, uuid", ps -> {
             Map<String, Resume> map = new LinkedHashMap<>();
-            try (var ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name, uuid")) {
-                var rs = ps.executeQuery();
-                while (rs.next()) {
-                    String uuid = rs.getString("uuid");
-                    map.put(uuid, new Resume(uuid, rs.getString("full_name")));
-                }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String uuid = rs.getString("uuid");
+                map.put(uuid, new Resume(uuid, rs.getString("full_name")));
             }
 
-            try (var ps = conn.prepareStatement("SELECT * FROM contact WHERE resume_uuid = ?")) {
+            sqlHelper.blockExecute("SELECT * FROM contact WHERE resume_uuid = ?", psContact -> {
                 for (var r : map.values()) {
-                    ps.setString(1, r.getUuid());
-                    var rs = ps.executeQuery();
-                    while (rs.next()) {
-                        addContacts(r, rs);
+                    psContact.setString(1, r.getUuid());
+                    var rsContact = psContact.executeQuery();
+                    while (rsContact.next()) {
+                        addContacts(r, rsContact);
                     }
                 }
-            }
+                return null;
+            });
 
-            try (var ps = conn.prepareStatement("SELECT * FROM section WHERE resume_uuid = ?")) {
+            sqlHelper.blockExecute("SELECT * FROM section WHERE resume_uuid = ?", psSection -> {
                 for (var r : map.values()) {
-                    ps.setString(1, r.getUuid());
-                    var rs = ps.executeQuery();
-                    while (rs.next()) {
-                        addSections(r, rs);
+                    psSection.setString(1, r.getUuid());
+                    var rsSection = psSection.executeQuery();
+                    while (rsSection.next()) {
+                        addSections(r, rsSection);
                     }
                 }
-            }
-
+                return null;
+            });
             return new ArrayList<>(map.values());
         });
     }
+
 
     @Override
     public int size() {
@@ -209,7 +210,7 @@ public class SqlStorage implements Storage {
             var sectionValue = rs.getString("section_value");
             var section = switch (type) {
                 case PERSONAL, OBJECTIVE -> new TextSection(sectionValue);
-                case ACHIEVEMENT, QUALIFICATIONS -> new ListSection(sectionValue);
+                case ACHIEVEMENT, QUALIFICATIONS -> new ListSection(sectionValue.split("\n"));
                 default -> null;
             };
 
