@@ -253,16 +253,16 @@ public class ResumeTestData {
         resume.setSections(SectionType.ACHIEVEMENT, new ListSection(List.of("achievements", "some text")));
         resume.setSections(SectionType.QUALIFICATIONS, new ListSection(List.of("qualifications", "some text")));
 
-//        var period1 = new Period(LocalDate.of(2013, 10, 1),
-//                LocalDate.now(), "Автор проекта", "str1");
-//        resume.setSections(SectionType.EXPERIENCE, new CompanySection(List.of(
-//                new Company("Java Online Projects", "", List.of(period1)))));
-//
-//        var period9 = new Period(LocalDate.of(2023, 3, 1),
-//                LocalDate.of(2023, 5, 1), "",
-//                "'Functional Programming Principles in Scala' by Martin Odersky\n");
-//        resume.setSections(SectionType.EDUCATION, new CompanySection(List.of(new Company("Alcatel",
-//                "", List.of(period9)))));
+        var period1 = new Period(LocalDate.of(2013, 10, 1),
+                LocalDate.now(), "Автор проекта", "str1");
+        resume.setSections(SectionType.EXPERIENCE, new CompanySection(List.of(
+                new Company("Java Online Projects", "", List.of(period1)))));
+
+        var period9 = new Period(LocalDate.of(2023, 3, 1),
+                LocalDate.of(2023, 5, 1), "",
+                "'Functional Programming Principles in Scala' by Martin Odersky\n");
+        resume.setSections(SectionType.EDUCATION, new CompanySection(List.of(new Company("Alcatel",
+                "", List.of(period9)))));
         return resume;
     }
 }

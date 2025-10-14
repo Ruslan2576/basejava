@@ -32,6 +32,14 @@ public class Resume implements Serializable {
         return sections;
     }
 
+    public String getContact(ContactType type) {
+        return contacts.get(type);
+    }
+
+    public Section getSection(SectionType type) {
+        return sections.get(type);
+    }
+
     public void setContacts(ContactType key, String val) {
         contacts.put(key, val);
     }
@@ -79,5 +87,9 @@ public class Resume implements Serializable {
     @Override
     public String toString() {
         return uuid + " " + fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

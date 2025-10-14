@@ -28,7 +28,7 @@ public class ListSection extends Section {
 
     @Override
     public String toString() {
-        return strings.toString();
+        return strings.toString().replace("[", "").replace("]", "");
     }
 
     @Override
