@@ -17,17 +17,17 @@
     <form method="post" action="resume" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <dl>
-            <dt>Имя:</dt>
-            <dd><input type="text" name="fullName" size=50 value="${resume.fullName}"></dd>
+            <dt>Имя</dt>
+            <dd><input type="text" name="fullName" size=50 value="${resume.fullName}" required  pattern=".*\S+.*"></dd>
         </dl>
-        <h3>Контакты:</h3>
+        <h3>Контакты</h3>
         <c:forEach var="type" items="<%=ContactType.values()%>">
             <dl>
                 <dt>${type.title}</dt>
                 <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}"></dd>
             </dl>
         </c:forEach>
-        <h3>Секции:</h3>
+        <h3>Секции</h3>
         <c:forEach var="type" items="<%=SectionType.values()%>">
             <c:if test="${type != 'EXPERIENCE' && type != 'EDUCATION'}">
                 <dl>

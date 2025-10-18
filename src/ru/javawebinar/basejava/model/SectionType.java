@@ -19,7 +19,7 @@ public enum SectionType {
     }
 
     protected String toHtml0(String value) {
-        return title + ": " + value;
+        return value;
     }
 
     public String toHtml(String value) {

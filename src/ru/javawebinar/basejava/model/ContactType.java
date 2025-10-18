@@ -1,13 +1,13 @@
 package ru.javawebinar.basejava.model;
 
 public enum ContactType {
-    PHONE_NUMBER("Тел.: "),
-    SKYPE("Skype: "){
+    PHONE_NUMBER("Тел."),
+    SKYPE("Skype"){
         public String toHtml0(String value) {
             return "<a href='skype:" + value + "'>" + value + "</a>";
         }
     },
-    MAIL("Почта: "){
+    MAIL("Почта"){
         public String toHtml0(String value) {
             return "<a href='mailto:" + value + "'>" + value + "</a>";
         }

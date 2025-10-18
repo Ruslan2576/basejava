@@ -19,8 +19,15 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume r = storage.get(uuid);
-        r.setFullName(fullName);
+
+        Resume r;
+        if (uuid == null || uuid.isEmpty()) {
+            r = new Resume(fullName);
+        } else {
+            r = storage.get(uuid);
+            r.setFullName(fullName);
+        }
+
         for (ContactType type : ContactType.values()) {
             String value = request.getParameter(type.name());
             if (value != null && !value.trim().isEmpty()) {
@@ -39,7 +46,12 @@ public class ResumeServlet extends HttpServlet {
             }
         }
 
-        storage.update(r);
+        if (uuid == null || uuid.isEmpty()) {
+            storage.save(r);
+        } else {
+            storage.update(r);
+        }
+
         response.sendRedirect("resume");
     }
 
@@ -51,7 +63,7 @@ public class ResumeServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
             return;
         }
-        Resume r = null;
+        Resume r;
         switch (action) {
             case "delete":
                 storage.delete(uuid);
@@ -60,6 +72,9 @@ public class ResumeServlet extends HttpServlet {
             case "view":
             case "edit":
                 r = storage.get(uuid);
+                break;
+            case "add":
+                r = new Resume();
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
